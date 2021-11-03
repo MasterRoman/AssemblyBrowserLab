@@ -13,7 +13,7 @@ namespace AssemblyBrowserLibrary
         public Attributes attributes { get; private set; }
         public string containerDeclaration { get; set; }
 
-        protected abstract string ConvertModifierToString();
+        protected abstract string ConvertAttributesToString();
         public abstract override string ToString();
 
         protected IType(string name, string accessModifier, Attributes attributes)

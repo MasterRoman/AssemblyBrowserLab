@@ -14,7 +14,7 @@ namespace AssemblyBrowserLibrary.Analyzers
 
         protected abstract Attributes GetAttributes();
 
-        public abstract IType GetData(MemberInfo data);
+        public abstract IType GetInfo(MemberInfo data);
 
         protected string ConvertTypeNameToString(Type type)
         {

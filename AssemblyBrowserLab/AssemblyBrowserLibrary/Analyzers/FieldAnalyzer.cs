@@ -30,7 +30,7 @@ namespace AssemblyBrowserLibrary.Analyzers
             return attribute;
         }
 
-        public override IType GetData(MemberInfo data)
+        public override IType GetInfo(MemberInfo data)
         {
             this.fieldInfo = (FieldInfo)data;
             return new FieldInformation(fieldInfo.Name, GetAccessModifier(), ConvertTypeNameToString(fieldInfo.FieldType), GetAttributes());

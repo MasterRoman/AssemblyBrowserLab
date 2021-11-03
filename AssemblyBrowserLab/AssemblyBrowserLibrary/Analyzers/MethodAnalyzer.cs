@@ -51,7 +51,7 @@ namespace AssemblyBrowserLibrary.Analyzers
             }
         }
 
-        public override IType GetData(MemberInfo data)
+        public override IType GetInfo(MemberInfo data)
         {
             this.methodInfo = (MethodBase)data;
             string returnType = string.Empty;

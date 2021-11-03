@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowserLibrary.Analyzers
 {
-    class TypeAnalyzer
+    public class TypeAnalyzer
     {
         private const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy;
 
@@ -24,22 +24,22 @@ namespace AssemblyBrowserLibrary.Analyzers
             this.methodAnalyzer = new MethodAnalyzer();
         }
 
-        public Type typeData { get; private set; }
+        public Type typeInfo { get; private set; }
 
         private string GetAccessModifier()
         {
-            if (typeData.IsNotPublic) return "internal";
+            if (typeInfo.IsNotPublic) return "internal";
 
             return "public";
         }
 
         private string GetTypeName()
         {
-            if (typeData.IsClass && typeData.BaseType.Name == "MulticastDelegate") return "delegate";
-            if (typeData.IsClass) return "class";
-            if (!typeData.IsPrimitive && typeData.IsValueType) return "struct";
-            if (typeData.IsInterface) return "interface";
-            if (typeData.IsEnum) return "enum";
+            if (typeInfo.IsClass && typeInfo.BaseType.Name == "MulticastDelegate") return "delegate";
+            if (typeInfo.IsClass) return "class";
+            if (!typeInfo.IsPrimitive && typeInfo.IsValueType) return "struct";
+            if (typeInfo.IsInterface) return "interface";
+            if (typeInfo.IsEnum) return "enum";
           
             return null;
         }
@@ -47,33 +47,33 @@ namespace AssemblyBrowserLibrary.Analyzers
         private Attributes GetAttributes()
         {
             Attributes attributes = (Attributes)0;
-            if (typeData.IsAbstract && typeData.IsSealed)
+            if (typeInfo.IsAbstract && typeInfo.IsSealed)
                 return attributes |= Attributes.Static;
-            if (typeData.IsAbstract) attributes |= Attributes.Abstract;
+            if (typeInfo.IsAbstract) attributes |= Attributes.Abstract;
 
             return attributes;
         }
 
-        public TypeInfo GetData(Type type)
+        public TypeInfo GetInfo(Type type)
         {
-            this.typeData = type;
+            this.typeInfo = type;
             var members = new List<IType>();
-            foreach (var method in typeData.GetMethods(bindingFlags))
+            foreach (var method in typeInfo.GetMethods(bindingFlags))
             {
                 if (!method.IsSpecialName)
                 {
-                    members.Add(this.methodAnalyzer.GetData(method));
+                    members.Add(this.methodAnalyzer.GetInfo(method));
                 }
             }
 
-            foreach (var property in typeData.GetProperties(bindingFlags)) members.Add(this.propertyAnalyzer.GetData(property));
+            foreach (var property in typeInfo.GetProperties(bindingFlags)) members.Add(this.propertyAnalyzer.GetInfo(property));
 
-            foreach (var constructor in typeData.GetConstructors(bindingFlags)) members.Add(this.methodAnalyzer.GetData(constructor));
+            foreach (var constructor in typeInfo.GetConstructors(bindingFlags)) members.Add(this.methodAnalyzer.GetInfo(constructor));
 
-            foreach (var field in typeData.GetFields(bindingFlags)) members.Add(this.fieldAnalyzer.GetData(field));
+            foreach (var field in typeInfo.GetFields(bindingFlags)) members.Add(this.fieldAnalyzer.GetInfo(field));
 
 
-            return new TypeInfo(GetTypeName(), typeData.Name, GetAccessModifier(), members, GetAttributes(), typeData.IsDefined(typeof(ExtensionAttribute)));
+            return new TypeInfo(GetTypeName(), typeInfo.Name, GetAccessModifier(), members, GetAttributes(), typeInfo.IsDefined(typeof(ExtensionAttribute)));
         }
     }
 

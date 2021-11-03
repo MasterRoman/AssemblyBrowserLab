@@ -34,7 +34,7 @@ namespace AssemblyBrowserLibrary.Analyzers
             return attributes;
         }
 
-        public override IType GetData(MemberInfo data)
+        public override IType GetInfo(MemberInfo data)
         {
             this.propertyInfo = (PropertyInfo)data;
             return new PropertyInformation(propertyInfo.Name, GetAccessModifier(),

@@ -8,6 +8,6 @@ namespace AssemblyBrowserLibrary
 {
     public interface IAssemblyBrowser
     {
-        List<NamespaceInfo> getAssemblyNamespaces(string path);
+        List<NamespaceInfo> GetAssemblyNamespaces(string path);
     }
 }
