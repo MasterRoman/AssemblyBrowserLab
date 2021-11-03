@@ -40,8 +40,7 @@ namespace AssemblyBrowser
                            try
                            {
                                OpenFileDialog openFileDialog = new OpenFileDialog();
-                               openFileDialog.Filter = @"Assemblies|*.dll;*.exe";
-                               openFileDialog.Title = @"Select";
+                   
                                openFileDialog.Multiselect = false;
                                if (openFileDialog.ShowDialog() == true)
                                {

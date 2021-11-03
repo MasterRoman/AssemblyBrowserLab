@@ -61,7 +61,6 @@ namespace AssemblyBrowserTests
             var extMethod = (MethodInformation)GetInfo(0, 10);
             Assert.Equal(extMethod.isExtension, true);
             Assert.Equal(extMethod.name, "MethodA");
-
         }
     }
 }
